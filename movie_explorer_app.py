@@ -2,10 +2,8 @@ import streamlit as st
 import pandas as pd
 
 df = pd.read_csv("movies_cleaned.csv")
-
-st.title("🎬 Movie Explorer App")
-
-all_genres = sorted(
+st.title("🎬 Movies Movies Movies 🎬")
+all_genres = ["All"] + sorted(
     df["genres"]
     .dropna()
     .str.split("|")
@@ -17,9 +15,12 @@ all_genres = sorted(
 
 selected_genre = st.selectbox("Select a genre:", all_genres)
 
-filtered_movies = df[
-    df["genres"].str.split("|").apply(lambda g: selected_genre in g)
-][["Title", "Year"]].reset_index(drop=True)
+if selected_genre == "All":
+    filtered_movies = df[["Title", "Year"]].reset_index(drop=True)
+else:
+    filtered_movies = df[
+        df["genres"].str.split("|").apply(lambda g: selected_genre in g)
+    ][["Title", "Year"]].reset_index(drop=True)
 
 st.subheader(f"Movies in Genre: {selected_genre}")
 st.write(f"{len(filtered_movies)} movies found.")
