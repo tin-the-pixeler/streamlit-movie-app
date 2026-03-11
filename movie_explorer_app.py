@@ -17,10 +17,14 @@ selected_genre = st.selectbox("Select a genre:", all_genres)
 
 if selected_genre == "All":
     filtered_movies = df[["Title", "Year"]].reset_index(drop=True)
+    
+    filtered_movies.index += 1
 else:
     filtered_movies = df[
         df["genres"].str.split("|").apply(lambda g: selected_genre in g)
     ][["Title", "Year"]].reset_index(drop=True)
+    
+    filtered_movies.index += 1
 
 st.subheader(f"Movies in Genre: {selected_genre}")
 st.write(f"{len(filtered_movies)} movies found.")
