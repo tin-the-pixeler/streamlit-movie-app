@@ -15,7 +15,7 @@ all_genres = ["All"] + sorted(
 
 selected_genre = st.selectbox("Select a genre:", all_genres)
 
-if selected_genre == "All":
+if selected_genre == "Showing All Genres":
     filtered_movies = df[["Title", "Year"]].reset_index(drop=True)
 else:
     filtered_movies = df[
